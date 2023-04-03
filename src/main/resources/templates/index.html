@@ -1,0 +1,73 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>PASSWORD GENERATOR</title>
+    <head th:replace="fragments :: header-fragment"></head>
+
+</head>
+
+
+<body class="bg-light">
+
+
+<div class="container">
+    <div style="width:650px;margin-left: auto;margin-right: auto;margin-top:10px;padding: 24px;">
+        <div class="card">
+            <div>
+                <img th:src="@{/images/STRONG-PASSWORD.jpg}" alt="" style="width: 600px">
+            </div>
+            <div class="card-header py-3">
+                <h1>Strong Password Generator</h1>
+            </div>
+            <div class="card-block" style="padding: 24px;">
+
+                <form th:action="@{/}" method="post">
+                    <fieldset>
+                        <div th:if="${param.success}">
+                            <h1 class="alert alert-success" th:text="${passKey}"></h1>
+                        </div>
+
+                        <div class="form-group" style="font-size: 20px;">
+                            <label for="length" class="form-label">
+                                Password Length:
+                                <span style="font-size: 30px;" id="length_selected"></span>
+                            </label>
+                            <input type="range" min="8" max="15" step="1" value="1" class="form-range" id="length" name="length" oninput="myFunction()">
+                        </div>
+
+                        <div class="form-group mt-3" style="font-size: 20px;">
+                            <input id="numbers" class="form-check-input" type="checkbox" autofocus="autofocus" name="numbers" checked>
+                            <label class="form-check-label" for="numbers" style="margin-right: 40px;">Include Numbers</label>
+
+                            <input id="specialCharacters" class="form-check-input" type="checkbox" autofocus="autofocus" name="specialCharacters">
+                            <label class="form-check-label" for="specialCharacters">Include SpecialCharacters</label>
+                        </div>
+                        <br>
+                        <div th:if="${param.failed}" class="alert alert-danger" style="font-size: 18px;">
+                            Provide a correct answer to proceed
+                        </div>
+                        <!--MY ROBOT CHECK-->
+                        <div class="form-group mt-3" style="font-size: 22px;">
+                            <div class="mb-2">Prove that you are a human</div>
+                            <span th:text="${question1}"></span> + <span th:text="${question2}"></span> =
+                            <input type="text" name="userAnswer" id="userAnswer" required>
+                        </div>
+                        <br>
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-success" style="font-size: 20px; margin-right: 30px;">Generate</button>
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<br><br>
+<div th:replace="fragments :: footer_fragment"></div>
+
+
+</body>
+</html>
