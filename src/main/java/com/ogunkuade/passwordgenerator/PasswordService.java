@@ -1,6 +1,8 @@
 package com.ogunkuade.passwordgenerator;
 
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.ui.Model;
@@ -9,6 +11,8 @@ import java.util.regex.Pattern;
 
 @Service
 public class PasswordService {
+
+    Logger logger = LoggerFactory.getLogger(PasswordService.class);
 
     String totalElements;
     String generatedPassword;
