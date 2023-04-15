@@ -6,6 +6,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.ui.Model;
+
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 
@@ -61,17 +63,21 @@ public class PasswordService {
 
 
     public String generatePasswordPageResult(Integer length, Boolean numbers, Boolean specialCharacters, String userAnswer, Model model) {
-        boolean matches = Pattern.matches("\\d+", userAnswer);
-        if(matches){
+        Pattern pattern = Pattern.compile("^\\d+$");
+        Matcher matcher = pattern.matcher(userAnswer);
+
+        if(matcher.find()){
             convertedUserAnswer = Integer.valueOf(userAnswer);
             if(convertedUserAnswer.equals(originalAnswer)){
                 passKey = generateHardPassword(length, numbers, specialCharacters);
+                logger.info("STRONG PASSWORD SUCCESSFULLY GENERATED");
                 return "redirect:/?success";
             } else{
+                logger.warn("USER COULD NOT PROVE TO BE A HUMAN");
                 return "redirect:/?failed";
             }
         } else{
-            System.out.println("not cool");
+            logger.error("USER PROVIDED A STRING INSTEAD OF A DIGIT");
             return "redirect:/?failed";
         }
 
